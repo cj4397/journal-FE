@@ -1,0 +1,55 @@
+
+
+
+
+export function useDatabase() {
+
+    const sign_up = async (name: string, email: string, password: string) => {
+        const send = await fetch('http://127.0.0.1:3000/user', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    name: name,
+                    email: email,
+                    password: password
+                }
+            )
+        });
+        const data = await send.json();
+        if (send.ok) {
+            return data
+        } else {
+            return false
+        }
+
+    }
+
+    const sign_in = async (email: string, password: string) => {
+        const result = await fetch('http://127.0.0.1:3000/user/signin', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    email: email,
+                    password: password
+                }
+            )
+        });
+        const data = await result.json();
+        if (result.ok) {
+            return data
+        } else {
+            return false
+        }
+    }
+
+    return {
+        sign_up,
+        sign_in
+    };
+}
