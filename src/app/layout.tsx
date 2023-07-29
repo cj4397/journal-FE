@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 
-import Auth from './auth'
+import Auth from './components/auth'
 
 
 export const metadata: Metadata = {

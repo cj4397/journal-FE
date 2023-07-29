@@ -6,8 +6,8 @@ import { useDatabase } from './api';
 
 import { useState } from "react";
 
-import { useAuth } from "../auth";
-import './login.css'
+import { useAuth } from "../components/auth";
+import "../css/login.css"
 
 export default function Login() {
     const [name, setName] = useState("");

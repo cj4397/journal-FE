@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { APIdashboard } from '../../api';
-import { useAuth } from "@/app/auth";
+import { useAuth } from "@/app/components/auth";
 
 export default function Task() {
     const { userData } = useAuth()

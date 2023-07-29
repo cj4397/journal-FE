@@ -1,4 +1,4 @@
-import { useAuth } from "../auth";
+import { useAuth } from "../components/auth";
 
 export function APIdashboard() {
     const { userData } = useAuth()
