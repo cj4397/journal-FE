@@ -5,7 +5,7 @@
 export function useDatabase() {
 
     const sign_up = async (name: string, email: string, password: string) => {
-        const send = await fetch('http://127.0.0.1:3000/user', {
+        const send = await fetch(`${process.env.NEXT_PUBLIC_DB_SIGN_UP}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export function useDatabase() {
     }
 
     const sign_in = async (email: string, password: string) => {
-        const result = await fetch('http://127.0.0.1:3000/user/signin', {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_DB_LOGIN}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

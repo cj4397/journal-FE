@@ -239,16 +239,29 @@ function Modal(props: any) {
                             <label htmlFor="name">Name</label>
                             <input id='name' type="text" value={new_task} onChange={(e: any) => setTask(e.target.value)} required />
 
-                            <label htmlFor=""></label>
-                            <input id='name' type="text" value={new_task} onChange={(e: any) => setTask(e.target.value)} required />
+                            <label htmlFor="details">Details</label>
+                            <input id='details' type="text" value={new_details} onChange={(e: any) => setDetails(e.target.value)} required />
 
-                            <select onChange={(e: any) => setNewCategory(e.target.value)}>
+                            <label htmlFor="category">Category</label>
+                            <select id='category' onChange={(e: any) => setNewCategory(e.target.value)}>
                                 <option value={category}>{category}</option>
                                 {category_list.map((e: any) => (
                                     <option key={e.id} value={e.name} >{e.name}</option>
                                 ))}
                             </select>
 
+                            <label htmlFor="status">Status</label>
+                            <select name="status" id="status" onChange={(e: any) => setStatus(e.target.value)}>
+                                <option value={new_status}>{new_status}</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+
+                            <input
+                                min={new Date().getFullYear() + '-' + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + String(new Date().getDate()).padStart(2, '0')}
+                                onChange={e => setDueDate(e.target.value)}
+                                value={new_due_date}
+                                type="date" />
 
                             <button type="submit">edited</button>
                         </form>

@@ -4,7 +4,7 @@ export function APIdashboard() {
     const { userData } = useAuth()
 
     const tasks = async () => {
-        const send = await fetch('http://127.0.0.1:3000/user/task', {
+        const send = await fetch(`${process.env.NEXT_PUBLIC_DB_TASKS}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export function APIdashboard() {
     }
 
     const create_task = async (userData: string, task_name: string, task_detail: string) => {
-        const result = await fetch('http://127.0.0.1:3000/user/task/create', {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_DB_CREATE_TASK}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export function APIdashboard() {
     }
 
     const create_category = async (userData: string, category_name: string, category_detail: string) => {
-        const result = await fetch('http://127.0.0.1:3000/user/category', {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_DB_CREATE_CATEGORY}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
