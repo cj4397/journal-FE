@@ -5,23 +5,9 @@ import { useMemo, createContext, useContext } from "react";
 import useLocalStorage from "./storage";
 
 const initialState = {
-    userData: '',
-    // {
-    //     name: '',
-    //     token: '',
-    //     category_id: '',
-    //     id: ''
-    // },
-    user: {
-        data: {
-            allow_password_change: Boolean,
-            email: '',
-            id: 0,
-        }
-    },
-    login: (data: { user_info?: object; user_data?: object }) => { },
-    get_params: (data: { user_name?: object; user_data?: object }) => { },
-    addFriend: (data: number) => { },
+    name: '',
+    token: '',
+    login: (name: string, token: string) => { },
     logout: () => { },
 };
 
@@ -37,45 +23,28 @@ export const useAuth = () => {
 export default function Auth(props: {
     children: React.ReactNode
 }) {
-    const [user, setUser] = useLocalStorage("User", null);
-    const [userData, setUserData] = useLocalStorage("UserData", null);
-    const [userFriendList, setFriendList] = useLocalStorage("Friends", [])
+    const [token, setToken] = useLocalStorage("Token", null);
+    const [name, setName] = useLocalStorage("Name", null);
 
-    const login = (data: { user_info?: object; user_data?: object }) => {
-        const { user_info, user_data } = data;
-        setUser(user_info);
-        setUserData(user_data);
-    };
-
-    const get_params = (data: { user_name?: object; user_data?: object }) => {
-        const { user_name, user_data } = data;
-        setUser(user_name);
-        setUserData(user_data);
-    };
+    const login = (name: string, token: string) => {
+        setName(name)
+        setToken(token)
+    }
 
     const logout = () => {
-        setUser(null);
-        setUserData(null);
+        setToken(null);
+        setName(null);
     };
 
-    const addFriend = (data: number) => {
-        if (userFriendList.findIndex((e: number) => e === data) === -1) {
-            userFriendList.push(data)
-        }
-
-        setFriendList(userFriendList)
-    }
 
     const value = useMemo(
         () => ({
-            userData,
-            user,
-            get_params,
+            name,
+            token,
             login,
             logout,
-            addFriend
         }),
-        [userData, user]
+        [token]
     );
 
     return <AuthContext.Provider value={value}> {props.children}</AuthContext.Provider>
