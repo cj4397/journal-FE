@@ -2,75 +2,67 @@
 
 import { useRouter } from 'next/navigation';
 import { useAuth } from './components/auth';
-
-
 import { useDatabase } from './components/api';
+import { useEffect, useState } from "react";
+import "./login.css"
 
-
-import { useState } from "react";
-
-
-import "../css/login.css"
 
 export default function Home() {
   const route = useRouter();
-  const { user } = useAuth()
-
-  if (user !== null) {
-    return route.push('/dashboard')
-  }
-
+  const { token } = useAuth()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { sign_in, sign_up } = useDatabase()
 
+  if (token !== null) {
+    return route.push('/dashboard')
+  }
+
+  useEffect(() => {
 
 
-  const { get_params } = useAuth()
+  }, [])
+
+  const { login } = useAuth()
 
   const [slide, setSlide] = useState(false)
 
+  async function signin() {
+    const result = await sign_in(email, password)
+    if (result) {
+      login(
+        result.user,
+        result.token
+      )
+      route.push('/dashboard')
+    } else {
+      console.log("invalid email or password")
+    }
+  }
+  async function signup() {
+    const result = await sign_up(name, email, password)
+    console.log(result)
+    if (result) {
+      login(
+        result.user,
+        result.token
+      )
+      route.push('/dashboard')
+    } else {
+      console.log("invalid email or password")
+    }
+  }
 
   const handleSubmit_sign_in = (e: any) => {
     e.preventDefault();
-
-    async function signin() {
-      const result = await sign_in(email, password)
-      if (result) {
-        get_params({
-          user_name: result.user,
-          user_data: result.token
-        })
-        route.push('/dashboard')
-      } else {
-        console.log("invalid email or password")
-      }
-    }
-
     signin()
   }
 
   const handleSubmit_sign_up = (e: any) => {
     e.preventDefault();
-
-    async function signup() {
-      const result = await sign_up(name, email, password)
-      console.log(result)
-      if (result) {
-        get_params({
-          user_name: result.user,
-          user_data: result.token
-        })
-        route.push('/dashboard')
-      } else {
-        console.log("invalid email or password")
-      }
-    }
     signup()
   }
-
-
 
   const slide_animation = () => {
     setSlide(slide ? false : true)
