@@ -6,14 +6,14 @@ import { useAuth } from "@/app/components/auth";
 
 
 export default function Category() {
-    const { userData } = useAuth()
+    const { token } = useAuth()
     const [category, setCategory] = useState('')
     const [details, setDetails] = useState('')
     const { create_category } = APIdashboard()
 
     const create_category_handler = (e: any) => {
         e.preventDefault();
-        create_category(userData, category, details)
+        create_category(token, category, details)
     }
 
     return (
