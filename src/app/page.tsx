@@ -9,19 +9,16 @@ import "./login.css"
 
 export default function Home() {
   const route = useRouter();
-  const { token } = useAuth()
+  const { token, login } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { sign_in, sign_up } = useDatabase()
+  const [slide, setSlide] = useState(false);
+  const { sign_in, sign_up } = useDatabase();
 
   if (token !== null) {
     return route.push('/dashboard')
   }
-
-  const { login } = useAuth()
-
-  const [slide, setSlide] = useState(false)
 
   async function signin() {
     const result = await sign_in(email, password)
@@ -35,6 +32,7 @@ export default function Home() {
       console.log("invalid email or password")
     }
   }
+
   async function signup() {
     const result = await sign_up(name, email, password)
     console.log(result)
@@ -48,7 +46,6 @@ export default function Home() {
       console.log("invalid email or password")
     }
   }
-
 
   const handleSubmit_sign_in = (e: any) => {
     e.preventDefault();
