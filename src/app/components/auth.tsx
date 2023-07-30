@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, createContext, useContext } from "react";
+import { useRouter } from 'next/navigation';
 
 import useLocalStorage from "./storage";
 
@@ -26,14 +27,20 @@ export default function Auth(props: {
     const [token, setToken] = useLocalStorage("Token", null);
     const [name, setName] = useLocalStorage("Name", null);
 
+    const route = useRouter();
+
+
     const login = (name: string, token: string) => {
         setName(name)
         setToken(token)
     }
 
     const logout = () => {
+        route.push('/')
         setToken(null);
         setName(null);
+
+
     };
 
 

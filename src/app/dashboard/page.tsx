@@ -1,41 +1,6 @@
 "use client"
 
 
-// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
-
-// const columns: GridColDef[] = [
-//     { field: 'id', headerName: 'ID', minWidth: 30 },
-//     { field: 'task', headerName: 'Task', minWidth: 100 },
-//     { field: 'category', headerName: 'Category', minWidth: 100 },
-//     { field: 'status', headerName: 'Status', minWidth: 70 },
-//     {
-//         field: 'due',
-//         headerName: 'Due Date',
-//         type: 'number',
-//         width: 100,
-//     },
-//     {
-//         field: 'date',
-//         headerName: 'Date',
-//         description: 'This column has a value getter and is not sortable.',
-//         sortable: false,
-//         width: 150
-//     },
-// ];
-
-// const rows = [
-//     { id: 1, task: 'Snow', category: 'Jon', status: 35 },
-//     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-//     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-//     { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-//     { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-//     { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-//     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-//     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-//     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-// ];
-
 import { APIdashboard } from './api';
 
 import Table from '@mui/material/Table';
@@ -78,24 +43,29 @@ function createcategories(
 }
 
 import { useEffect, useState } from 'react';
-
-
+import { useAuth } from '../components/auth';
 
 export default function Dashboard() {
-    const { tasks, categories } = APIdashboard()
+    const { tasks, categories, check_user } = APIdashboard()
     const [rows, setRows]: any[] = useState([])
     const [data, setData]: any[] = useState([])
     const [modal_data, setModalData]: any = useState({})
     const [modal_open, setModalOpen] = useState(false)
+    const { logout } = useAuth()
 
+    async function check_for_user() {
+        try {
+            await check_user()
+        } catch (error) {
+            console.error(error);
+            logout()
+        }
 
-    // const rows = [
-    //     // createData('Gingerbread', 356, 16.0, 49, 3.9),
-    // ];
+    }
 
     async function show_task() {
         const result = await tasks()
-        if (result) {
+        if (result.ok) {
             const list: any[] = []
             const datas: any[] = []
             let i = 1
@@ -115,7 +85,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         show_task()
-
+        check_for_user()
     }, [])
 
 

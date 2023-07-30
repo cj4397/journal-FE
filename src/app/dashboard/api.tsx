@@ -1,7 +1,27 @@
 import { useAuth } from "../components/auth";
 
 export function APIdashboard() {
-    const { userData } = useAuth()
+    const { token } = useAuth()
+
+    const check_user = async () => {
+        const send = await fetch(`${process.env.NEXT_PUBLIC_DB_CHECK_USER}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    token: token
+                }
+            )
+        });
+        const data = await send.json();
+        if (send.ok) {
+            return data
+        } else {
+            return false
+        }
+    }
 
     const tasks = async () => {
         const send = await fetch(`${process.env.NEXT_PUBLIC_DB_TASKS}`, {
@@ -11,7 +31,7 @@ export function APIdashboard() {
             },
             body: JSON.stringify(
                 {
-                    token: userData
+                    token: token
                 }
             )
         });
@@ -33,7 +53,7 @@ export function APIdashboard() {
             },
             body: JSON.stringify(
                 {
-                    token: userData
+                    token: token
                 }
             )
         });
@@ -47,7 +67,7 @@ export function APIdashboard() {
 
     }
 
-    const create_task = async (userData: string, task_name: string, task_detail: string) => {
+    const create_task = async (token: string, task_name: string, task_detail: string) => {
         const result = await fetch(`${process.env.NEXT_PUBLIC_DB_CREATE_TASK}`, {
             method: "POST",
             headers: {
@@ -55,7 +75,7 @@ export function APIdashboard() {
             },
             body: JSON.stringify(
                 {
-                    "token": userData,
+                    "token": token,
                     "task": {
                         "task": task_name,
                         "details": task_detail
@@ -96,6 +116,7 @@ export function APIdashboard() {
     }
 
     return {
+        check_user,
         tasks,
         create_task,
         categories,

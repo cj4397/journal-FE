@@ -1,8 +1,11 @@
 
-
+import { useAuth } from "./auth";
 
 
 export function useDatabase() {
+    const { token } = useAuth()
+
+
 
     const sign_up = async (name: string, email: string, password: string) => {
         const send = await fetch(`${process.env.NEXT_PUBLIC_DB_SIGN_UP}`, {
@@ -49,6 +52,7 @@ export function useDatabase() {
     }
 
     return {
+
         sign_up,
         sign_in
     };

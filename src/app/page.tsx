@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from './components/auth';
 import { useDatabase } from './components/api';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./login.css"
 
 
@@ -18,11 +18,6 @@ export default function Home() {
   if (token !== null) {
     return route.push('/dashboard')
   }
-
-  useEffect(() => {
-
-
-  }, [])
 
   const { login } = useAuth()
 
@@ -54,6 +49,7 @@ export default function Home() {
     }
   }
 
+
   const handleSubmit_sign_in = (e: any) => {
     e.preventDefault();
     signin()
@@ -69,7 +65,7 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main id='body'>
 
       <div className={`container , ${slide ? 'right-panel-active' : ''}`} id="sidebar">
         <div className="form-container sign-up-container">
