@@ -5,14 +5,14 @@ import { APIdashboard } from '../../api';
 import { useAuth } from "@/app/components/auth";
 
 export default function Task() {
-    const { userData } = useAuth()
+    const { token } = useAuth()
     const [task, setTask] = useState('')
     const [details, setDetails] = useState('')
     const { create_task } = APIdashboard()
 
     const create_task_handler = (e: any) => {
         e.preventDefault();
-        create_task(userData, task, details)
+        create_task(token, task, details)
     }
 
     return (
