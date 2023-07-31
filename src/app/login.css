@@ -7,39 +7,14 @@
 }
 
 
-.login {
-    border-radius: 20px;
-    border: 3px solid #785A28;
-    background-color: #0A323C;
-    color: #F0E6D2;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 12px 45px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 80ms ease-in;
-    transition: all 1s;
-}
-
-login:hover {
-    transform: scale(0.95);
-    border: 3px solid #C89B3C;
-    background-color: #0397AB;
-    color: #010A13;
-}
-
-login:focus {
-    outline: none;
-}
-
-login.ghost {
+.ghost {
     background-color: transparent;
     border-color: #C89B3C;
-
+    transition: all 1.5s;
 }
 
-login.ghost:hover {
-    background-color: #0A323C;
+.ghost:hover {
+    background-color: #010A13;
     border-color: #C89B3C;
 
 }

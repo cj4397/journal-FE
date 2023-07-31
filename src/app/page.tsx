@@ -73,7 +73,7 @@ export default function Home() {
             <input id="new_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <input id="new_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-            <button >Sign Up</button>
+            <button className="ghost">Sign Up</button>
           </form>
         </div>
         <div className="form-container sign-in-container">
@@ -88,7 +88,7 @@ export default function Home() {
             <input id="user_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <input id="user_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-            <button >Sign In</button>
+            <button className="ghost">Sign In</button>
           </form>
         </div>
         <div className="overlay-container">

@@ -36,11 +36,10 @@ export default function Auth(props: {
     }
 
     const logout = () => {
-        route.push('/')
+
         setToken(null);
         setName(null);
-
-
+        route.push('/')
     };
 
 

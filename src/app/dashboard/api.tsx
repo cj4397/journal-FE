@@ -67,7 +67,12 @@ export function APIdashboard() {
 
     }
 
-    const create_task = async (token: string, task_name: string, task_detail: string) => {
+    const create_task = async (
+        task_name: string,
+        detail: string,
+        category: number,
+        due_date: string
+    ) => {
         const result = await fetch(`${process.env.NEXT_PUBLIC_DB_CREATE_TASK}`, {
             method: "POST",
             headers: {
@@ -77,8 +82,11 @@ export function APIdashboard() {
                 {
                     "token": token,
                     "task": {
-                        "task": task_name,
-                        "details": task_detail
+                        "task_name": task_name,
+                        "details": detail,
+                        "category_id": category,
+                        "status": "pending",
+                        "due_date": due_date
                     }
                 }
             )
@@ -91,7 +99,10 @@ export function APIdashboard() {
         }
     }
 
-    const create_category = async (userData: string, category_name: string, category_detail: string) => {
+    const create_category = async (
+        category_name: string,
+        category_detail: string
+    ) => {
         const result = await fetch(`${process.env.NEXT_PUBLIC_DB_CREATE_CATEGORY}`, {
             method: "POST",
             headers: {
@@ -99,7 +110,7 @@ export function APIdashboard() {
             },
             body: JSON.stringify(
                 {
-                    "token": userData,
+                    "token": token,
                     "category": {
                         "name": category_name,
                         "details": category_detail
@@ -115,11 +126,99 @@ export function APIdashboard() {
         }
     }
 
+    const edit_task = async (
+        old_name: string,
+        task_name: string,
+        detail: string,
+        category: any,
+        status: string,
+        due_date: string
+    ) => {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_DB_EDIT_TASK}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    "token": token,
+                    "task_find": old_name,
+                    "task": {
+                        "task_name": task_name,
+                        "details": detail,
+                        "category_id": category,
+                        "status": status,
+                        "due_date": due_date
+                    }
+                }
+            )
+        });
+        const data = await result.json();
+        if (result.ok) {
+            return data
+        } else {
+            return false
+        }
+    }
+
+    const delete_task = async (
+        task_name: string
+    ) => {
+        const send = await fetch(`${process.env.NEXT_PUBLIC_DB_DELETE_TASK}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    token: token,
+                    task_name: task_name
+                }
+            )
+        });
+
+        const data = await send.json();
+        if (send.ok) {
+            return data
+        } else {
+            return false
+        }
+
+    }
+
+    const delete_category = async (
+        id: number
+    ) => {
+        const send = await fetch(`${process.env.NEXT_PUBLIC_DB_DELETE_CATEGORY}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    token: token,
+                    id: id
+                }
+            )
+        });
+
+        const data = await send.json();
+        if (send.ok) {
+            return data
+        } else {
+            return false
+        }
+
+    }
+
     return {
         check_user,
         tasks,
         create_task,
+        edit_task,
         categories,
-        create_category
+        create_category,
+        delete_task,
+        delete_category
     };
 }
